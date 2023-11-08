@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+  mysqldb:
+   container_name: mysqldbcontainer
+   image: mysql:8.0.33
+   environment:
+      MYSQL_DATABASE: employeecrud
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_TCP_PORT: 3309
+   ports:
+   - 3309:3309
+   networks:
+   - common-network
+   volumes:
+   - mydbdata:/var/lib/mysql
+      
+  java-app:
+   container_name: javaappcontainer
+   image: jwtcrud:v1
+   restart: on-failure
+   env_file: ./.env
+   build: .
+   ports: 
+    - 8080:8080
+   depends_on:
+    - mysqldb
+   environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3309
+   networks:
+   - common-network
+
+networks:
+  common-network:
+  
+volumes:
+   mydbdata:
+    name: mydbdata
+    external: true
+   
+   
+  
+     
+      
+ 
+    
+
+    
+   
+  

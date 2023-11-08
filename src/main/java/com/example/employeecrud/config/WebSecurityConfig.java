@@ -46,8 +46,8 @@ public class WebSecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/auth").permitAll()
-						.requestMatchers("/api/employee/add").hasRole("ADMIN").requestMatchers("/api/employee/delete")
-						.hasRole("ADMIN").anyRequest().authenticated())
+						.requestMatchers("/api/employee/add").hasRole("ADMIN")
+						.requestMatchers("/api/employee/getall").hasRole("ADMIN").anyRequest().authenticated())
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
